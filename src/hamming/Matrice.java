@@ -67,21 +67,25 @@ public class Matrice {
     
     public void displayMatrice(){
         System.out.println("Affichage de la matrice :");
-        System.out.println("+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+");
+        System.out.println("+------------+------------+------------+------------+------------+------------+------------+------------+------------+------------+");
         for (int i = 0; i < entries.size(); i++) {
             for (int j = 0; j < entries.size(); j++) {
                 
-                int x = i + 0;
-                int y = j + 0;
+                int x = i + 1;
+                int y = j + 1;
                 
                 if(i == j){
-                    System.out.print("| "+ x +":"+ y + " -> 0 ");
-                }else{                    
+                    System.out.print("|  "+ x +":"+ y + " -> 0  ");
+                }else if(i > 8){
+                    System.out.print("| "+ x +":"+ y + " -> " + entries.get(i).calculateHammingDistance(entries.get(j)) + "  ");               
+                }else if(j > 8){
+                    System.out.print("|  "+ x +":"+ y + " -> " + entries.get(i).calculateHammingDistance(entries.get(j)) + " ");               
+                }else{
                     // Appel de la fonction permettant de calculer la distance de Hamming x = Distance Hamming                    
-                    System.out.print("| "+ x +":"+ y + " -> " + entries.get(i).calculateHammingDistance(entries.get(j)) + " ");               
+                    System.out.print("|  "+ x +":"+ y + " -> " + entries.get(i).calculateHammingDistance(entries.get(j)) + "  ");               
                 }                       
             }
-            System.out.println("|\n+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+");
+            System.out.println("|\n+------------+------------+------------+------------+------------+------------+------------+------------+------------+------------+");
             
         }
         System.out.println("\n");
@@ -113,9 +117,6 @@ public class Matrice {
         System.out.println("\n");
     }
     
-    
-   
-    
     public void generateClusters(int nbCluster){
         for (int i = 0; i < nbCluster; i++) {
             clusters.add(new Cluster());
@@ -140,16 +141,6 @@ public class Matrice {
         return cluster;
     }
     
-    public Cluster getLastClusterNotEmpty() {
-        Cluster cluster = clusters.get(0);
-        for(Cluster c : clusters){
-            if(!c.isEmpty()){
-                cluster = c;
-            }
-        }
-        return cluster;
-    }
-    
     public void sortEntries(){
         for(Entry entry : entries){
             Cluster c = getFirstClusterEmpty();
@@ -165,28 +156,11 @@ public class Matrice {
                         }
                     }
                 }
+                //Cluster myFinalCluster = entry.calculateDistanceWithClusters(getFirstCluster(), getSecondCluster());
+                //myFinalCluster.addEntry(entry);
             }
             
         }
-        /*for(Entry entry : entries){
-            if(entry.getIdEntry() == 1){
-                clusters.get(0).addEntry(entry);  
-            }
-            if(entry.getIdEntry() == 2){
-                clusters.get(1).addEntry(entry);  
-            }
-            if(entry.getIdEntry() > 2){
-                for(int i = 0; i < clusters.size(); i++){
-                    for(int j = i + 1; j < clusters.size(); j++){
-                        if(entry.calculateDistanceMaxWithCluster(clusters.get(i)) <= entry.calculateDistanceMinWithCluster(clusters.get(j))){
-                            clusters.get(i).addEntry(entry);
-                        }else{
-                            clusters.get(j).addEntry(entry);
-                        }
-                    }
-                }
-            }                        
-        }*/
     }
     
     public void displayCluster(){
@@ -212,6 +186,27 @@ public class Matrice {
             
         }
         return distance;
+    }
+    
+    public void check(Cluster cluster1, Cluster cluster2){
+        for(int i = 0; i < cluster1.count(); i++){
+            for(int j = i + 1; j < cluster1.count(); j++){
+                for(int k = 0; j < cluster2.count(); j++){
+                    if(cluster1.getEntries().get(i).calculateHammingDistance(cluster1.getEntries().get(j)) < cluster1.getEntries().get(i).calculateHammingDistance(cluster2.getEntries().get(k))){
+                        System.out.println(cluster1.getEntries().get(i).getIdEntry() + " et " + cluster1.getEntries().get(j).getIdEntry() + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster1.getEntries().get(j)) );
+                        System.out.println("true");
+
+                        //System.out.println("Distance entre " + cluster1.getEntries().get(i).idEntry + " et " + cluster2.getEntries().get(j).idEntry + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster2.getEntries().get(j)));
+
+                    }else{
+                        System.out.println(cluster1.getEntries().get(i).getIdEntry() + " et " + cluster1.getEntries().get(j).getIdEntry() + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster1.getEntries().get(j)) );
+                        System.out.println("false");
+                    }
+                }
+                
+                
+            }
+        }
     }
 
     

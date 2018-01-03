@@ -107,13 +107,11 @@ public class Cluster {
                 cluster.entries.add(e);
             }
         }
-        /*
-        for(int i = 0; i < entries.size(); i++){
-            for(int j = i + 1; j < entries.size(); j++){
-                if(entries.get(i).calculateHammingDistance(entries.get(j)) < distance){
-                    
-                }
-            }
-        }*/
+    }
+    
+    
+    
+    public int count(){
+        return entries.size();
     }
 }

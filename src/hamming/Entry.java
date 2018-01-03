@@ -168,15 +168,85 @@ public class Entry {
         return distance;
     }
     
-    public int calculateDistanceWithCluster(Cluster cluster){
-        int distance = 0;
-        for(Entry e : cluster.entries){
-            int newDistance = this.calculateHammingDistance(e);
-            if(newDistance != 0){
-                distance = newDistance;
+    public Cluster calculateDistanceWithClusters(Cluster cluster1, Cluster cluster2){
+        /*int distance = 0;
+        ArrayList<Integer> listDistances = new ArrayList<Integer>();
+        for(Entry e : cluster1.entries){
+            
+            listDistances.add(this.calculateHammingDistance(e));              
+            distance = Collections.max(listDistances);
+        }
+        for(Entry e : cluster2.entries){
+            listDistances.add(this.calculateHammingDistance(e));              
+            distance = Collections.min(listDistances);
+        }*/
+        Cluster finalCluster = cluster1;
+        boolean reponse = false;
+        for(int i = 0; i < cluster1.count(); i++){
+            for(int j = 0; j < cluster2.count(); j++){
+                for(int k = i + 1; k < cluster1.count(); k++){
+                    //System.out.println("i : " +i+ " | k : " +k+ " | j : " +j);                    
+
+                    if(this.calculateHammingDistance(cluster1.getEntries().get(i)) < this.calculateHammingDistance(cluster2.getEntries().get(j))){
+                        //System.out.println("Distance entre " + this.idEntry + " et " + cluster1.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster1.getEntries().get(i)));
+                        //System.out.println("Distance entre " + this.idEntry + " et " + cluster2.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster2.getEntries().get(j)));
+                        //System.out.println("Distance entre " + this.idEntry + " et " + cluster1.getEntries().get(k).idEntry + " = " + this.calculateHammingDistance(cluster1.getEntries().get(k)));
+                        //System.out.println("Distance entre " + this.idEntry + " et " + cluster1.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster1.getEntries().get(i)) + " < Distance entre " + this.idEntry + " et " + cluster2.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster2.getEntries().get(j)));
+                        //System.out.println("VRAI");
+                        reponse = true;
+                        //cluster1.addEntry(this);
+                        finalCluster = cluster1;
+                        //System.out.println("-----------------------------------------------");
+
+                        //System.out.println("Distance entre " + cluster1.getEntries().get(i).idEntry + " et " + cluster2.getEntries().get(j).idEntry + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster2.getEntries().get(j)));
+                        /*if(this.calculateHammingDistance(cluster1.getEntries().get(i)) < cluster1.getEntries().get(i).calculateHammingDistance(cluster2.getEntries().get(j))){
+                            System.out.println("Distance entre " + this.getIdEntry() + " et " + cluster1.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster1.getEntries().get(i)) + " \nDistance entre " + cluster1.getEntries().get(i).getIdEntry() + " et " + cluster2.getEntries().get(j).getIdEntry() + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster2.getEntries().get(j)));
+                            System.out.println("Distance entre " + this.getIdEntry() + " et " + cluster1.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster1.getEntries().get(i)) + " < Distance entre " + this.getIdEntry() + " et " + cluster2.getEntries().get(j).getIdEntry() + " = " + this.calculateHammingDistance(cluster2.getEntries().get(j)));
+                            System.out.println("VRAI");
+                            reponse = true; 
+                        }else{
+                            System.out.println("Distance entre " + this.getIdEntry() + " et " + cluster1.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster1.getEntries().get(i)) + " \nDistance entre " + cluster1.getEntries().get(i).getIdEntry() + " et " + cluster2.getEntries().get(j).getIdEntry() + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster2.getEntries().get(j)));
+                            System.out.println("Distance entre " + this.getIdEntry() + " et " + cluster1.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster1.getEntries().get(i)) + " < Distance entre " + cluster1.getEntries().get(i).getIdEntry() + " et " + cluster2.getEntries().get(j).getIdEntry() + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster2.getEntries().get(j)));
+                            System.out.println("FAUX");
+                            reponse = false;
+                        }*/
+
+
+                    }else{
+                        //cluster2.addEntry(this);
+                        finalCluster = cluster2;
+                        //System.out.println("FAUX");
+                        reponse = false;
+                    }
+                
+                }
+               //System.out.println("Distance entre " + this.idEntry + " et " + cluster1.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster1.getEntries().get(i)) + " < Distance entre " + this.idEntry + " et " + cluster2.getEntries().get(i).idEntry + " = " + this.calculateHammingDistance(cluster2.getEntries().get(j))); 
             }
         }
-        return distance;
+        
+        //System.out.println("Bonne Réponse : " + reponse);
+        return finalCluster;
+    }
+    
+    public void check(Cluster cluster1, Cluster cluster2){
+        for(int i = 0; i < cluster1.count(); i++){
+            for(int j = i + 1; j < cluster1.count(); j++){
+                for(int k = 0; j < cluster2.count(); j++){
+                    if(cluster1.getEntries().get(i).calculateHammingDistance(cluster1.getEntries().get(j)) < cluster1.getEntries().get(i).calculateHammingDistance(cluster2.getEntries().get(k))){
+                        System.out.println(cluster1.getEntries().get(i).getIdEntry() + " et " + cluster1.getEntries().get(j).getIdEntry() + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster1.getEntries().get(j)) );
+                        System.out.println("true");
+
+                        //System.out.println("Distance entre " + cluster1.getEntries().get(i).idEntry + " et " + cluster2.getEntries().get(j).idEntry + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster2.getEntries().get(j)));
+
+                    }else{
+                        System.out.println(cluster1.getEntries().get(i).getIdEntry() + " et " + cluster1.getEntries().get(j).getIdEntry() + " = " + cluster1.getEntries().get(i).calculateHammingDistance(cluster1.getEntries().get(j)) );
+                        System.out.println("false");
+                    }
+                }
+                
+                
+            }
+        }
     }
     
 }
