@@ -66,6 +66,7 @@ public class Hamming {
             myMatrice.sortEntries();
             myMatrice.displayCluster();
             
+            
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
