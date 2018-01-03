@@ -168,4 +168,15 @@ public class Entry {
         return distance;
     }
     
+    public int calculateDistanceWithCluster(Cluster cluster){
+        int distance = 0;
+        for(Entry e : cluster.entries){
+            int newDistance = this.calculateHammingDistance(e);
+            if(newDistance != 0){
+                distance = newDistance;
+            }
+        }
+        return distance;
+    }
+    
 }
