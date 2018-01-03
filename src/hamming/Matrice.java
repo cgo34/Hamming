@@ -40,19 +40,6 @@ public class Matrice {
         addEntry(new Entry(data));
     }
     
-    /*public void generateDefaultData() {
-        addEntry(new Entry(1, 2, 2, 1));
-        addEntry(new Entry(1, 1, 2, 1));
-        addEntry(new Entry(2, 2, 2, 1));
-        addEntry(new Entry(1, 2, 1, 1));
-        addEntry(new Entry(1, 2, 2, 2));
-        addEntry(new Entry(1, 1, 1, 2));
-        addEntry(new Entry(2, 2, 2, 2));
-        addEntry(new Entry(2, 1, 1, 1));
-        addEntry(new Entry(2, 1, 1, 2));
-        addEntry(new Entry(2, 2, 1, 2));
-    }*/
-    
     public Entry addEntry(Entry entry) {
         if (entries.add(entry)) {
             return entry;
